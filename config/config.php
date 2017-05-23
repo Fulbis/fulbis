@@ -11,6 +11,10 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Auth\ConfigProvider::class,
+    \Players\ConfigProvider::class,
+    \Teams\ConfigProvider::class,
+    \Leagues\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 

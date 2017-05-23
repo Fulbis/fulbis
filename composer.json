@@ -28,7 +28,11 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/App/src/"
+            "App\\": "src/App/src/",
+            "Leagues\\": "src/Leagues/src/",
+            "Teams\\": "src/Teams/src/",
+            "Players\\": "src/Players/src/",
+            "Auth\\": "src/Auth/src/"
         }
     },
     "autoload-dev": {

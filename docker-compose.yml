@@ -1,0 +1,51 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    redis:
+      image: phpdockerio/redis:latest
+      container_name: fulbis-redis
+
+    mysql:
+      image: mysql:5.7
+      container_name: fulbis-mysql
+      working_dir: /application
+      environment:
+        - MYSQL_ROOT_PASSWORD=123123
+        - MYSQL_DATABASE=fulbis
+        - MYSQL_USER=fulbis
+        - MYSQL_PASSWORD=123123
+      volumes:
+        - ./../mysql-fulbis-data:/var/lib/mysql
+      ports:
+       - "3306:3306"
+
+    webserver:
+      image: phpdockerio/nginx:latest
+      container_name: fulbis-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8888:80"
+      links:
+       - php-fpm
+
+    php-fpm:
+      build:
+        context: .
+        dockerfile: phpdocker/php-fpm/Dockerfile
+      container_name: fulbis-php-fpm
+      working_dir: /application
+      environment:
+        - COMPOSER_ALLOW_SUPERUSER=1
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.1/fpm/conf.d/99-overrides.ini
+
+      links:
+        - mysql
+        - redis

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+
 /**
  * The configuration provider for the App module
  *
@@ -33,11 +35,12 @@ class ConfigProvider
     public function getDependencies()
     {
         return [
-            'invokables' => [
-                Action\PingAction::class => Action\PingAction::class,
+            'factories' => [
+                \Zend\Hydrator\ClassMethods::class => Hydrator\Factory::class
             ],
-            'factories'  => [
-                Action\HomePageAction::class => Action\HomePageFactory::class,
+            'abstract_factories' => [
+                Repository\AbstractFactory::class,
+                ReflectionBasedAbstractFactory::class,
             ],
         ];
     }

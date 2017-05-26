@@ -34,6 +34,9 @@ return [
             Zend\Stratigility\Middleware\ErrorHandler::class => Container\ErrorHandlerFactory::class,
             Middleware\ErrorResponseGenerator::class         => Container\ErrorResponseGeneratorFactory::class,
             Middleware\NotFoundHandler::class                => Container\NotFoundHandlerFactory::class,
+
+            Doctrine\DBAL\Connection::class =>  \ContainerInteropDoctrine\ConnectionFactory::class,
+            Doctrine\ORM\EntityManager::class =>  \ContainerInteropDoctrine\EntityManagerFactory::class,
         ],
     ],
 ];

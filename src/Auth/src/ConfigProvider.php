@@ -2,6 +2,8 @@
 
 namespace Auth;
 
+use Zend\Authentication\AuthenticationService;
+
 /**
  * The configuration provider for the Auth module
  *
@@ -36,6 +38,7 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories'  => [
+                AuthenticationService::class => AuthenticationServiceFactory::class,
             ],
         ];
     }
@@ -49,7 +52,7 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'app'    => [__DIR__ . '/../auth'],
+                'auth'    => [__DIR__ . '/../templates'],
             ],
         ];
     }

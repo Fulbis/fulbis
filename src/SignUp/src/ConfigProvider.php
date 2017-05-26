@@ -1,9 +1,9 @@
 <?php
 
-namespace Leagues;
+namespace SignUp;
 
 /**
- * The configuration provider for the Leagues module
+ * The configuration provider for the SignUp module
  *
  * @see https://docs.zendframework.com/zend-component-installer/
  */
@@ -49,7 +49,7 @@ class ConfigProvider
     {
         return [
             'paths' => [
-                'leagues'    => [__DIR__ . '/../templates'],
+                'signup'    => [__DIR__ . '/../templates'],
             ],
         ];
     }

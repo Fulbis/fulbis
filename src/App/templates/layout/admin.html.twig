@@ -1,0 +1,13 @@
+{% set bodyClass = 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden' %}
+
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}Voluntarios{% endblock %}
+
+{% block pre_content %}
+        {% include '@layout/admin_pre.html.twig' %}
+{% endblock %}
+
+{% block post_content %}
+        {% include '@layout/admin_post.html.twig' %}
+{% endblock %}

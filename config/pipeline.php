@@ -39,6 +39,8 @@ $app->pipe(ImplicitHeadMiddleware::class);
 $app->pipe(ImplicitOptionsMiddleware::class);
 $app->pipe(UrlHelperMiddleware::class);
 
+$app->pipe(\Auth\Action\AuthAction::class);
+$app->pipe(\App\Action\RouterFirewallAction::class);
 // Add more middleware here that needs to introspect the routing results; this
 // might include:
 //

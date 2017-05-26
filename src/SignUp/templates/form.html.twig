@@ -1,0 +1,19 @@
+<form action="{{ path('signup') }}" method="post">
+    <div class="input-group mb-3 {{ errors.name is defined ? "has-danger" : "" }}">
+        <input type="text" class="form-control" placeholder="Name" name="name" required data-reuse-submitted-value="true" />
+    </div>
+
+    <div class="input-group mb-3 {{ errors.email is defined ? "has-danger" : "" }}">
+        <input type="email" class="form-control" placeholder="Email" name="email" required data-reuse-submitted-value="true" />
+    </div>
+
+    <div class="input-group mb-3 {{ errors.password is defined ? "has-danger" : "" }}">
+        <input type="password" class="form-control" placeholder="Password" name="password" required />
+    </div>
+
+    <div class="input-group mb-4 {{ errors.retype_password is defined ? "has-danger" : "" }}">
+        <input type="password" class="form-control" placeholder="Repeat password" name="retype_password" required data-validators="identical{token:password}" />
+    </div>
+
+    <button type="submit" class="btn btn-block btn-success">Create Account</button>
+</form>

@@ -11,6 +11,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \SignUp\ConfigProvider::class,
     \Auth\ConfigProvider::class,
     \Players\ConfigProvider::class,
     \Teams\ConfigProvider::class,

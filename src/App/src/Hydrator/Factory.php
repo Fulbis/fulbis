@@ -13,6 +13,8 @@ class Factory implements FactoryInterface
         $hydrator = new ClassMethods;
 
         $hydrator->addStrategy('user', $container->get(UserStrategy::class));
+        $hydrator->addStrategy('league', $container->get(LeagueStrategy::class));
+        $hydrator->addStrategy('team', $container->get(TeamStrategy::class));
 
         return $hydrator;
     }

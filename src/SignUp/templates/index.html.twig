@@ -12,6 +12,10 @@
                         <h1>Register</h1>
                         <p class="text-muted">Create your account</p>
 
+                        {% if error is defined %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                        {% endif %}
+
                         {% if form is defined %}
                             {{ form|raw }}
                         {% else %}

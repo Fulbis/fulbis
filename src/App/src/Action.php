@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Action\HelperTrait;
 use Fig\Http\Message\StatusCodeInterface as StatusCode;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
@@ -10,6 +11,8 @@ use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Expressive\Router\RouteResult;
 
 class Action implements MiddlewareInterface {
+
+    use HelperTrait;
 
     public function process(ServerRequestInterface $request, DelegateInterface $delegate) {
         $action = $request->getAttribute('action', 'index');
@@ -23,15 +26,6 @@ class Action implements MiddlewareInterface {
         }
 
         return $this->$action($request, $delegate);
-    }
-
-    public function getRouteParam(ServerRequestInterface $request, $name, $default = null) {
-        /** @var RouteResult $routeResult */
-        $routeResult = $request->getAttribute(RouteResult::class);
-
-        $params = $routeResult->getMatchedParams();
-
-        return isset($params[$name]) ? $params[$name] : $default;
     }
 
 }

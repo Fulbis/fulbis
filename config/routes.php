@@ -26,7 +26,9 @@
  * );
  */
 
-$app->route('/', Auth\Action\LoginAction::class, ['GET', 'POST'], 'login');
+$app->route('/', App\Action\HomeAction::class, ['GET', 'POST'], 'home');
+$app->route('/login', Auth\Action\LoginAction::class, ['GET', 'POST'], 'login');
+$app->get('/logout', Auth\Action\LogoutAction::class, 'logout');
 $app->route('/signup', SignUp\Action\SignUpAction::class, ['GET', 'POST'], 'signup');
 
 /* leagues */
@@ -36,14 +38,17 @@ $app->get('/leagues/{leagueId}', Leagues\Action\ViewAction::class, 'leagues.view
 /*$app->get('/leagues/{leagueId}/edit', Leagues\Action\Edit::class, 'leagues.edit');
 $app->get('/leagues/{leagueId}/delete', Leagues\Action\Delete::class, 'leagues.delete');*/
 
+$app->get('/leagues/{leagueId}/fixture', Fixture\Action\ViewAction::class, 'fixture.view');
+
 /* Teams */
-/*$app->get('/leagues/{leagueId}/teams', Teams\Action\FetchAll::class, 'teams.fetchAll');
-$app->get('/leagues/{leagueId}/teams/create', Teams\Action\Create::class, 'teams.create');
-$app->get('/leagues/{leagueId}/teams/{teamId}/edit', Teams\Action\Edit::class, 'teams.edit');
+$app->get('/leagues/{leagueId}/teams', Teams\Action\FetchAllAction::class, 'teams.fetchAll');
+$app->route('/leagues/{leagueId}/teams/create', Teams\Action\CreateAction::class, ['GET', 'POST'], 'teams.create');
+$app->get('/leagues/{leagueId}/teams/{teamId}', Teams\Action\ViewAction::class, 'teams.view');
+/*$app->get('/leagues/{leagueId}/teams/{teamId}/edit', Teams\Action\Edit::class, 'teams.edit');
 $app->get('/leagues/{leagueId}/teams/{teamId}/delete', Teams\Action\Delete::class, 'teams.delete');*/
 
 /* Players */
-/*$app->get('/leagues/{leagueId}/teams/{teamId}/players', Players\Action\FetchAll::class, 'players.fetchAll');
-$app->get('/leagues/{leagueId}/teams/{teamId}/players/create', Players\Action\Create::class, 'players.create');
-$app->get('/leagues/{leagueId}/teams/{teamId}/players/{playerId}/edit', Players\Action\Edit::class, 'players.edit');
+//$app->get('/leagues/{leagueId}/teams/{teamId}/players', Players\Action\FetchAll::class, 'players.fetchAll');
+$app->route('/leagues/{leagueId}/teams/{teamId}/players/create', Players\Action\CreateAction::class, ['GET', 'POST'], 'players.create');
+/*$app->get('/leagues/{leagueId}/teams/{teamId}/players/{playerId}/edit', Players\Action\Edit::class, 'players.edit');
 $app->get('/leagues/{leagueId}/teams/{teamId}/players/{playerId}/delete', Players\Action\Delete::class, 'players.delete');*/

@@ -10,6 +10,8 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class RouterFirewallAction implements ServerMiddlewareInterface
 {
+    use HelperTrait;
+
     private $template;
     private $entityManager;
 
@@ -24,10 +26,7 @@ class RouterFirewallAction implements ServerMiddlewareInterface
 
         $userId = $request->getAttribute(\Auth\Action\AuthAction::class)['id'];
 
-        /** @var \Zend\Expressive\Router\RouteResult $routeResult */
-        $routeResult = $request->getAttribute(\Zend\Expressive\Router\RouteResult::class);
-
-        $params = $routeResult->getMatchedParams();
+        $params = $this->getRouteParams($request);
 
         $this->template->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'routeParams', $params);
 
@@ -35,9 +34,19 @@ class RouterFirewallAction implements ServerMiddlewareInterface
             /** @var \App\Repository\League $league */
             $league = $this->entityManager->getRepository(\App\Entity\League::class);
             $this->template->addDefaultParam(
-                                TemplateRendererInterface::TEMPLATE_ALL,
-                                'league',
-                                $league->find($params['leagueId'])
+                TemplateRendererInterface::TEMPLATE_ALL,
+                'league',
+                $league->find($params['leagueId'])
+            );
+        }
+
+        if (isset($params['teamId'])) {
+            /** @var \App\Repository\Team $team */
+            $team = $this->entityManager->getRepository(\App\Entity\Team::class);
+            $this->template->addDefaultParam(
+                TemplateRendererInterface::TEMPLATE_ALL,
+                'team',
+                $team->find($params['teamId'])
             );
         }
 

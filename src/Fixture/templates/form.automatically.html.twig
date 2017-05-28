@@ -1,0 +1,7 @@
+<form action="{{ path('leagues.create') }}" method="post">
+    <div class="input-group mb-3 {{ errors.name is defined ? "has-danger" : "" }}">
+        <input type="text" class="form-control" placeholder="Name" name="name" required data-reuse-submitted-value="true" />
+    </div>
+
+    <button type="submit" class="btn btn-block btn-success">Create League</button>
+</form>

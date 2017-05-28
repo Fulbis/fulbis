@@ -1,0 +1,17 @@
+{% extends '@layout/admin.html.twig' %}
+
+{% block title %}Team{% endblock %}
+
+{% block content %}
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <h1>{{ team.name }}</h1>
+
+    <p><a class="btn btn-primary" href="{{ path('players.create', {leagueId: league.id, teamId: team.id}) }}">Add players</a></p>
+
+    <ul>
+        {% for player in players %}
+            <li>{{ player.name }}</li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}

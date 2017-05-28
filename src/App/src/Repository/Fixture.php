@@ -3,9 +3,8 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use App\Entity\Team as Entity;
 
-final class Team extends EntityRepository {
+final class Fixture extends EntityRepository {
 
     public function findByLeague($leagueId) {
         return $this->findBy(['league' => $leagueId]);

@@ -1,0 +1,8 @@
+<form action="{{ path('teams.create') }}" method="post">
+    <div class="form-group {{ errors.name is defined ? "has-danger" : "" }}">
+        <textarea class="form-control" placeholder="Name" name="name" required data-reuse-submitted-value="true" rows="8"></textarea>
+        <small class="form-text text-muted">Add one team per line.</small>
+    </div>
+
+    <button type="submit" class="btn btn-block btn-success">Add teams</button>
+</form>

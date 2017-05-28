@@ -1,0 +1,15 @@
+{% extends '@layout/admin.html.twig' %}
+
+{% block title %}Fixture{% endblock %}
+
+{% block content %}
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <h1>Fixture {{ league.name }}</h1>
+
+    {% if matches is not empty %}
+
+    {% else %}
+        <div class="alert alert-danger">This league doesn't have any matches yet, you can <a href="">create them automatically</a> or <a href="">create them manually </a></div>
+    {% endif %}
+</main>
+{% endblock %}

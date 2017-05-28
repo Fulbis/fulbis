@@ -13,6 +13,8 @@ class AuthAction implements ServerMiddlewareInterface
 {
     private $auth;
 
+    private $allowedPaths = ['/', '/login', '/logout', '/signup'];
+
     public function __construct(AuthenticationService $auth)
     {
         $this->auth = $auth;
@@ -22,14 +24,14 @@ class AuthAction implements ServerMiddlewareInterface
     {
         if (! $this->auth->hasIdentity()) {
 
-            if($request->getUri()->getPath() === '/login' || $request->getUri()->getPath() === '/registro') {
+            if(in_array($request->getUri()->getPath(), $this->allowedPaths)) {
                 return $delegate->process($request);
             }
 
             return new RedirectResponse('/login');
         }
 
-        if(in_array($request->getUri()->getPath(), ['/', '/login', '/registro'])) {
+        if(in_array($request->getUri()->getPath(), $this->allowedPaths)) {
             return new RedirectResponse('/leagues');
         }
 

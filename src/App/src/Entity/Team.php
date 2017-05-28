@@ -30,7 +30,7 @@ class Team
     /**
      * @var League
      *
-     * @ORM\OneToOne(targetEntity="League")
+     * @ORM\ManyToOne(targetEntity="League")
      * @ORM\JoinColumn(name="league_id", referencedColumnName="id")
      */
     private $league;

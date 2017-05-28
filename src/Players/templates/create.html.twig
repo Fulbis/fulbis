@@ -1,10 +1,11 @@
 {% extends '@layout/admin.html.twig' %}
 
-{% block title %}Create a new League{% endblock %}
+{% block title %}Add a new player{% endblock %}
 
 {% block content %}
 
     <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card mx-4">
@@ -13,13 +14,15 @@
                         {% if form is defined %}
                             {{ form|raw }}
                         {% else %}
-                            {% include "@leagues/form.html.twig"  %}
+                            {% include "@players/form.html.twig"  %}
                         {% endif %}
 
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
+
 
 {% endblock %}

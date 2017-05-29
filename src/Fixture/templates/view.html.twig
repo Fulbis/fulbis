@@ -8,8 +8,26 @@
 
     {% if matches is not empty %}
 
+        {% set currentRound = -1 %}
+
+        {% for match in matches %}
+
+            {% if currentRound != match.round %}
+                <h3>{{ match.round }}</h3>
+                {% set currentRound = match.Round %}
+            {% endif %}
+
+            {% if match.team1 is not null and match.team2 is not null %}
+                <p>{{ match.team1.name }} vs {{ match.team2.name }}</p>
+            {% elseif match.team1 is null and match.team2 is null %}
+                <p>Empty game</p>
+            {% else %}
+                <p>{{ match.team1 ? match.team1.name : match.team2.name }} doesn't play</p>
+            {% endif %}
+        {% endfor %}
+
     {% else %}
-        <div class="alert alert-danger">This league doesn't have any matches yet, you can <a href="">create them automatically</a> or <a href="">create them manually </a></div>
+        <div class="alert alert-danger">This league doesn't have any matches yet, you can <a href="{{ path('fixture.create.automatically', {leagueId: routeParams.leagueId}) }}">create them automatically</a> or <a href="">create them manually </a></div>
     {% endif %}
 </main>
 {% endblock %}

@@ -39,6 +39,7 @@ $app->get('/leagues/{leagueId}', Leagues\Action\ViewAction::class, 'leagues.view
 $app->get('/leagues/{leagueId}/delete', Leagues\Action\Delete::class, 'leagues.delete');*/
 
 $app->get('/leagues/{leagueId}/fixture', Fixture\Action\ViewAction::class, 'fixture.view');
+$app->route('/leagues/{leagueId}/fixture/create/automatically', Fixture\Action\CreateAutomaticallyAction::class, ['GET', 'POST'], 'fixture.create.automatically');
 
 /* Teams */
 $app->get('/leagues/{leagueId}/teams', Teams\Action\FetchAllAction::class, 'teams.fetchAll');

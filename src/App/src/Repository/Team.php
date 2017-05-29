@@ -7,7 +7,7 @@ use App\Entity\Team as Entity;
 
 final class Team extends EntityRepository {
 
-    public function findByLeague($leagueId) {
+    public function findByLeague($leagueId): array {
         return $this->findBy(['league' => $leagueId]);
     }
 

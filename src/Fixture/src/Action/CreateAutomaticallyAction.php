@@ -1,10 +1,13 @@
 <?php
 
-namespace Leagues\Action;
+namespace Fixture\Action;
 
 use App\Action;
+use App\Repository\Fixture;
+use App\Repository\Team;
 use App\Service\EntityPersister;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Fixture\Service\FixtureGenerator;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Xtreamwayz\HTMLFormValidator\FormFactory;
@@ -14,29 +17,40 @@ use Zend\Expressive\Template;
 use Zend\Expressive\Router;
 
 
-class CreateAction extends Action
+class CreateAutomaticallyAction extends Action
 {
+
+    use Action\HelperTrait;
 
     private $template;
     private $router;
     private $entityPersister;
+    private $fixtureGenerator;
+    private $team;
+    private $fixture;
 
-    public function __construct(Template\TemplateRendererInterface $template, Router\RouterInterface $router, EntityPersister $entityPersister)
+    public function __construct(
+        Template\TemplateRendererInterface $template, Router\RouterInterface $router,
+        EntityPersister $entityPersister, FixtureGenerator $fixtureGenerator,
+        Team $team, Fixture $fixture)
     {
         $this->template = $template;
         $this->router = $router;
         $this->entityPersister = $entityPersister;
+        $this->fixtureGenerator = $fixtureGenerator;
+        $this->team = $team;
+        $this->fixture = $fixture;
     }
 
     public function index(ServerRequestInterface $request, DelegateInterface $delegate)
     {
-        return new HtmlResponse($this->template->render('leagues::create'));
+        return new HtmlResponse($this->template->render('fixture::automatically'));
     }
 
     public function indexPost(ServerRequestInterface $request, DelegateInterface $delegate)
     {
 
-        $form = FormFactory::fromHtml($this->template->render('leagues::create'));
+        $form = FormFactory::fromHtml($this->template->render('fixture::form-automatically'));
 
         $validationResult = $form->validateRequest($request);
 
@@ -44,13 +58,34 @@ class CreateAction extends Action
 
             $data = $validationResult->getValues();
 
-            $data['user'] = $request->getAttribute(\Auth\Action\AuthAction::class)['id'];
+            $leagueId = $this->getRouteParam($request, 'leagueId');
 
-            $this->entityPersister->create(\App\Entity\League::class, $data);
+            $teams = array_map(
+                        function(\App\Entity\Team $team){return (string)$team->getId();},
+                        $this->team->findByLeague($leagueId)
+            );
 
-            return new RedirectResponse($this->router->generateUri('leagues.fetchAll'));
+            $fixture = $this->fixtureGenerator->build($teams, $data['totalGames'] == 2);
+
+            // delete existing games
+            $this->fixture->deleteFromLeague($leagueId);
+
+            foreach($fixture as $round => $games) {
+                foreach($games as $game) {
+                    $data = [
+                        'league' => $leagueId,
+                        'round' => $round,
+                        'team1' => $game[0],
+                        'team2' => $game[1],
+                    ];
+
+                    $this->entityPersister->create(\App\Entity\Fixture::class, $data);
+                }
+            }
+
+            return new RedirectResponse($this->router->generateUri('fixture.view', ['leagueId' => $leagueId]));
         }
 
-        return new HtmlResponse($this->template->render('leagues::create', ['form' => $form->asString($validationResult), 'errors' => $validationResult->getMessages()]));
+        return new HtmlResponse($this->template->render('fixture::automatically', ['form' => $form->asString($validationResult), 'errors' => $validationResult->getMessages()]));
     }
 }

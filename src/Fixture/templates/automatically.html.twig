@@ -1,6 +1,6 @@
 {% extends '@layout/admin.html.twig' %}
 
-{% block title %}Create a new League{% endblock %}
+{% block title %}Create fixture{% endblock %}
 
 {% block content %}
 
@@ -10,10 +10,12 @@
                 <div class="card mx-4">
                     <div class="card-block p-4">
 
+                        <div class="alert alert-danger">All existing games will be deleted.</div>
+
                         {% if form is defined %}
                             {{ form|raw }}
                         {% else %}
-                            {% include "@leagues/form.html.twig"  %}
+                            {% include "@fixture/form-automatically.html.twig"  %}
                         {% endif %}
 
                     </div>

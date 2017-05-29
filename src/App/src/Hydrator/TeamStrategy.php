@@ -20,6 +20,10 @@ class TeamStrategy implements StrategyInterface
 
     public function hydrate($value)
     {
+        if ($value === null) {
+            return $value;
+        }
+
         return $this->entityManager->getReference(\App\Entity\Team::class, $value);
     }
 }

@@ -1,0 +1,56 @@
+<form action="{{ path('fixture.edit', {leagueId: routeParams.leagueId, round: round}) }}" method="post">
+
+    {% for match in matches %}
+
+        <div class="row">
+            <div class="col-3">
+                <label>Team 1</label><br />
+                <select name="data_{{ match.id }}_team1" data-reuse-submitted-value="true" required>
+                    <option value=""></option>
+                    {% for teamId, teamName in teams %}
+                        <option value="{{ teamId }}">{{ teamName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label>Score</label><br />
+                <input type="text" name="data_{{ match.id }}_score1" data-reuse-submitted-value="true" />
+            </div>
+            <div class="col-3">
+                <label>Team 2</label><br />
+                <select name="data_{{ match.id }}_team2" data-reuse-submitted-value="true" required>
+                    <option value=""></option>
+                    {% for teamId, teamName in teams %}
+                        <option value="{{ teamId }}">{{ teamName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label>Score</label><br />
+                <input type="text" name="data_{{ match.id }}_score2" data-reuse-submitted-value="true" />
+            </div>
+        </div>
+
+        {# <input type="text" name="data[{match.id}][place]" required /> #}
+
+        {# time / date #}
+
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="data_{{ match.id }}_title" data-reuse-submitted-value="true" />
+        </div>
+
+        <div class="form-group">
+            <label>Comments</label>
+            <textarea name="data_{{ match.id }}_comments" data-reuse-submitted-value="true"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Referee</label>
+            <input type="text" name="data_{{ match.id }}_referee" data-reuse-submitted-value="true" />
+        </div>
+
+    {% endfor %}
+
+    <button type="submit" class="btn btn-block btn-success">Edit</button>
+</form>

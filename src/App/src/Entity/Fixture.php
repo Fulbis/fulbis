@@ -341,4 +341,20 @@ class Fixture
         return $this;
     }
 
+    public function getArrayCopy() {
+        $team1 = $this->getTeam1();
+        $team2 = $this->getTeam2();
+
+        return [
+            'id' => (string)$this->getId(),
+            'team1' => $team1 ? (string)$team1->getId() : null,
+            'team2' => $team2 ? (string)$team2->getId() : null,
+            'score1' => $this->getScore1(),
+            'score2' => $this->getScore2(),
+            'title' => $this->getTitle(),
+            'comments' => $this->getComments(),
+            'referee' => $this->getReferee(),
+        ];
+    }
+
 }

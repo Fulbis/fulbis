@@ -6,8 +6,19 @@ use Doctrine\ORM\EntityRepository;
 
 final class Fixture extends EntityRepository {
 
-    public function findByLeague($leagueId) {
-        return $this->findBy(['league' => $leagueId], ['round' => 'ASC']);
+    /**
+     * @param $leagueId
+     * @param int $round
+     * @return \App\Entity\Fixture[]
+     */
+    public function findByLeague($leagueId, int $round = 0) {
+        $criteria = ['league' => $leagueId];
+
+        if ($round) {
+            $criteria['round'] = $round;
+        }
+
+        return $this->findBy($criteria, ['round' => 'ASC']);
     }
 
     public function deleteFromLeague($leagueId) {

@@ -13,7 +13,7 @@
         {% for match in matches %}
 
             {% if currentRound != match.round %}
-                <h3>{{ match.round }}</h3>
+                <h3>{{ match.round }} <a href="{{ path('fixture.edit', {leagueId: routeParams.leagueId, round: match.round}) }}" class="btn btn-sm btn-primary">Edit</a></h3>
                 {% set currentRound = match.Round %}
             {% endif %}
 

@@ -3,7 +3,8 @@
 namespace Fixture\Action;
 
 use App\Action;
-use App\Repository\Fixture;
+use App\Repository\Game;
+use App\Repository\GameStats;
 use App\Repository\Team;
 use App\Service\EntityPersister;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -27,19 +28,21 @@ class EditRoundAction extends Action
     private $entityPersister;
     private $fixtureGenerator;
     private $team;
-    private $fixture;
+    private $game;
+    private $gameStats;
 
     public function __construct(
         Template\TemplateRendererInterface $template, Router\RouterInterface $router,
         EntityPersister $entityPersister, FixtureGenerator $fixtureGenerator,
-        Team $team, Fixture $fixture)
+        Team $team, Game $game, GameStats $gameStats)
     {
         $this->template = $template;
         $this->router = $router;
         $this->entityPersister = $entityPersister;
         $this->fixtureGenerator = $fixtureGenerator;
         $this->team = $team;
-        $this->fixture = $fixture;
+        $this->game = $game;
+        $this->gameStats = $gameStats;
     }
 
     public function index(ServerRequestInterface $request, DelegateInterface $delegate)
@@ -60,8 +63,24 @@ class EditRoundAction extends Action
 
         if ($validationResult->isValid()) {
 
-            foreach($this->parseData($validationResult->getValues()) as $fixtureId => $data) {
-                $this->entityPersister->edit(\App\Entity\Fixture::class, $fixtureId, $data);
+            foreach($this->parseData($validationResult->getValues()) as $gameId => $data) {
+
+                $matchPlayers = $data['players'];
+                unset($data['players']);
+
+                $this->entityPersister->edit(\App\Entity\Game::class, $gameId, $data);
+
+                // delete all existing stats
+                $this->gameStats->deleteFromGame($gameId);
+
+                foreach($matchPlayers as $teamId => $players) {
+                    foreach($players as $playerId => $stats) {
+                        $stats['game'] = $gameId;
+                        $stats['team'] = $teamId;
+                        $stats['player'] = $playerId;
+                        $this->entityPersister->create(\App\Entity\GameStats::class, $stats);
+                    }
+                }
             }
 
             return new RedirectResponse($this->router->generateUri('fixture.view', ['leagueId' => $this->getRouteParam($request, 'leagueId')]));
@@ -74,7 +93,7 @@ class EditRoundAction extends Action
         $round = $this->getRouteParam($request, 'round');
         $leagueId = $this->getRouteParam($request,'leagueId');
 
-        $matches = $this->fixture->findByLeague($leagueId, $round);
+        $matches = $this->game->findByLeague($leagueId, $round);
 
         $teams = [];
         foreach($this->team->findByLeague($leagueId)as $team) {
@@ -93,7 +112,16 @@ class EditRoundAction extends Action
 
         foreach($data as $key => $val) {
             $key = explode("_", $key);
-            $new[$key[1]][$key[2]] = $val;
+
+            if (sizeof($key) === 3) {
+                $new[$key[1]][$key[2]] = $val;
+            } else {
+                if ($key[2] !== 'players') {
+                    throw new \InvalidArgumentException(__CLASS__.': invalid form key');
+                }
+                // [matchId][players][teamId][playerId][field] = val
+                $new[$key[1]]['players'][$key[3]][$key[4]][$key[5]] = $val;
+            }
         }
 
         return $new;
@@ -103,7 +131,7 @@ class EditRoundAction extends Action
         $round = $this->getRouteParam($request, 'round');
         $leagueId = $this->getRouteParam($request,'leagueId');
 
-        $matches = $this->fixture->findByLeague($leagueId, $round);
+        $matches = $this->game->findByLeague($leagueId, $round);
 
         $data = [];
 
@@ -115,6 +143,30 @@ class EditRoundAction extends Action
                 }
 
                 $data['data_'.(string)$match->getId().'_'.$field] = $value;
+            }
+
+            // players
+            foreach($this->gameStats->findByGame($match->getId()) as $stat) {
+
+                $statData = $stat->getArrayCopy();
+
+                foreach(['goals', 'yellowCard', 'redCard', 'score'] as $statType) {
+
+                    $key = [
+                        'data',
+                        (string)$stat->getGame()->getId(),
+                        'players',
+                        (string)$stat->getTeam()->getId(),
+                        (string)$stat->getPlayer()->getId(),
+                        $statType
+                    ];
+
+                    $key = implode('_', $key);
+
+                    $data[$key] = $statData[$statType];
+
+                }
+
             }
         }
 

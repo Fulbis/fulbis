@@ -3,31 +3,46 @@
     {% for match in matches %}
 
         <div class="row">
-            <div class="col-3">
-                <label>Team 1</label><br />
-                <select name="data_{{ match.id }}_team1" data-reuse-submitted-value="true" required>
-                    <option value=""></option>
-                    {% for teamId, teamName in teams %}
-                        <option value="{{ teamId }}">{{ teamName }}</option>
-                    {% endfor %}
-                </select>
+
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6">
+                        <label>Team 1</label><br />
+                        <select name="data_{{ match.id }}_team1" data-reuse-submitted-value="true" required>
+                            <option value=""></option>
+                            {% for teamId, teamName in teams %}
+                                <option value="{{ teamId }}">{{ teamName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label>Score</label><br />
+                        <input type="text" name="data_{{ match.id }}_score1" data-reuse-submitted-value="true" />
+                    </div>
+                    <div class="col-12">
+                        {% include "@fixture/form-edit-players.html.twig" with {match: match, team: match.team1} %}
+                    </div>
+                </div>
             </div>
-            <div class="col-3">
-                <label>Score</label><br />
-                <input type="text" name="data_{{ match.id }}_score1" data-reuse-submitted-value="true" />
-            </div>
-            <div class="col-3">
-                <label>Team 2</label><br />
-                <select name="data_{{ match.id }}_team2" data-reuse-submitted-value="true" required>
-                    <option value=""></option>
-                    {% for teamId, teamName in teams %}
-                        <option value="{{ teamId }}">{{ teamName }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-3">
-                <label>Score</label><br />
-                <input type="text" name="data_{{ match.id }}_score2" data-reuse-submitted-value="true" />
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6">
+                        <label>Team 2</label><br />
+                        <select name="data_{{ match.id }}_team2" data-reuse-submitted-value="true" required>
+                            <option value=""></option>
+                            {% for teamId, teamName in teams %}
+                                <option value="{{ teamId }}">{{ teamName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label>Score</label><br />
+                        <input type="text" name="data_{{ match.id }}_score2" data-reuse-submitted-value="true" />
+                    </div>
+                    <div class="col-12">
+                        {% include "@fixture/form-edit-players.html.twig" with {match: match, team: match.team2} %}
+                    </div>
+                </div>
             </div>
         </div>
 

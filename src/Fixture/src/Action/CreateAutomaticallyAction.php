@@ -3,7 +3,7 @@
 namespace Fixture\Action;
 
 use App\Action;
-use App\Repository\Fixture;
+use App\Repository\Game;
 use App\Repository\Team;
 use App\Service\EntityPersister;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -27,19 +27,19 @@ class CreateAutomaticallyAction extends Action
     private $entityPersister;
     private $fixtureGenerator;
     private $team;
-    private $fixture;
+    private $game;
 
     public function __construct(
         Template\TemplateRendererInterface $template, Router\RouterInterface $router,
         EntityPersister $entityPersister, FixtureGenerator $fixtureGenerator,
-        Team $team, Fixture $fixture)
+        Team $team, Game $game)
     {
         $this->template = $template;
         $this->router = $router;
         $this->entityPersister = $entityPersister;
         $this->fixtureGenerator = $fixtureGenerator;
         $this->team = $team;
-        $this->fixture = $fixture;
+        $this->game = $game;
     }
 
     public function index(ServerRequestInterface $request, DelegateInterface $delegate)
@@ -68,7 +68,7 @@ class CreateAutomaticallyAction extends Action
             $fixture = $this->fixtureGenerator->build($teams, $data['totalGames'] == 2);
 
             // delete existing games
-            $this->fixture->deleteFromLeague($leagueId);
+            $this->game->deleteFromLeague($leagueId);
 
             foreach($fixture as $round => $games) {
                 foreach($games as $game) {
@@ -79,7 +79,7 @@ class CreateAutomaticallyAction extends Action
                         'team2' => $game[1],
                     ];
 
-                    $this->entityPersister->create(\App\Entity\Fixture::class, $data);
+                    $this->entityPersister->create(\App\Entity\Game::class, $data);
                 }
             }
 

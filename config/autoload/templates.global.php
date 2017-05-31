@@ -21,6 +21,7 @@ return [
         'assets_url'     => '/',
         'assets_version' => null,
         'extensions'     => [
+            \App\Twig\RepositoryExtension::class,
             // extension service names or instances
         ],
         'runtime_loaders' => [

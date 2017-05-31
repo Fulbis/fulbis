@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Fixture")
- * @ORM\Table(name="fixtures")
+ * @ORM\Entity(repositoryClass="App\Repository\Game")
+ * @ORM\Table(name="games")
  */
-class Fixture
+class Game
 {
     /**
      * @var \Ramsey\Uuid\Uuid
@@ -117,9 +117,9 @@ class Fixture
 
     /**
      * @param \Ramsey\Uuid\Uuid $id
-     * @return Fixture
+     * @return Game
      */
-    public function setId(\Ramsey\Uuid\Uuid $id): Fixture
+    public function setId(\Ramsey\Uuid\Uuid $id): Game
     {
         $this->id = $id;
         return $this;
@@ -135,9 +135,9 @@ class Fixture
 
     /**
      * @param League $league
-     * @return Fixture
+     * @return Game
      */
-    public function setLeague(League $league): Fixture
+    public function setLeague(League $league): Game
     {
         $this->league = $league;
         return $this;
@@ -153,9 +153,9 @@ class Fixture
 
     /**
      * @param int $round
-     * @return Fixture
+     * @return Game
      */
-    public function setRound(int $round): Fixture
+    public function setRound(int $round): Game
     {
         $this->round = $round;
         return $this;
@@ -171,9 +171,9 @@ class Fixture
 
     /**
      * @param Team|null $team1
-     * @return Fixture
+     * @return Game
      */
-    public function setTeam1(?Team $team1): Fixture
+    public function setTeam1(?Team $team1): Game
     {
         $this->team1 = $team1;
         return $this;
@@ -189,9 +189,9 @@ class Fixture
 
     /**
      * @param Team|null $team2
-     * @return Fixture
+     * @return Game
      */
-    public function setTeam2(?Team $team2): Fixture
+    public function setTeam2(?Team $team2): Game
     {
         $this->team2 = $team2;
         return $this;
@@ -207,9 +207,9 @@ class Fixture
 
     /**
      * @param int|null $score1
-     * @return Fixture
+     * @return Game
      */
-    public function setScore1(?int $score1): Fixture
+    public function setScore1(?int $score1): Game
     {
         $this->score1 = $score1;
         return $this;
@@ -225,9 +225,9 @@ class Fixture
 
     /**
      * @param int|null $score2
-     * @return Fixture
+     * @return Game
      */
-    public function setScore2(?int $score2): Fixture
+    public function setScore2(?int $score2): Game
     {
         $this->score2 = $score2;
         return $this;
@@ -243,9 +243,9 @@ class Fixture
 
     /**
      * @param string $place
-     * @return Fixture
+     * @return Game
      */
-    public function setPlace(string $place): Fixture
+    public function setPlace(string $place): Game
     {
         $this->place = $place;
         return $this;
@@ -261,9 +261,9 @@ class Fixture
 
     /**
      * @param \DateTime|null $time
-     * @return Fixture
+     * @return Game
      */
-    public function setTime(?\DateTime $time): Fixture
+    public function setTime(?\DateTime $time): Game
     {
         $this->time = $time;
         return $this;
@@ -279,9 +279,9 @@ class Fixture
 
     /**
      * @param \DateTime|null $date
-     * @return Fixture
+     * @return Game
      */
-    public function setDate(?\DateTime $date): Fixture
+    public function setDate(?\DateTime $date): Game
     {
         $this->date = $date;
         return $this;
@@ -297,9 +297,9 @@ class Fixture
 
     /**
      * @param string $title
-     * @return Fixture
+     * @return Game
      */
-    public function setTitle(string $title): Fixture
+    public function setTitle(string $title): Game
     {
         $this->title = $title;
         return $this;
@@ -315,9 +315,9 @@ class Fixture
 
     /**
      * @param string $comments
-     * @return Fixture
+     * @return Game
      */
-    public function setComments(string $comments): Fixture
+    public function setComments(string $comments): Game
     {
         $this->comments = $comments;
         return $this;
@@ -333,9 +333,9 @@ class Fixture
 
     /**
      * @param string $referee
-     * @return Fixture
+     * @return Game
      */
-    public function setReferee(string $referee): Fixture
+    public function setReferee(string $referee): Game
     {
         $this->referee = $referee;
         return $this;

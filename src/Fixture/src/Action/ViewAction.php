@@ -3,7 +3,7 @@
 namespace Fixture\Action;
 
 use App\Action\HelperTrait;
-use App\Repository\Fixture;
+use App\Repository\Game;
 use App\Repository\League;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface as ServerMiddlewareInterface;
@@ -16,18 +16,18 @@ class ViewAction implements ServerMiddlewareInterface
     use HelperTrait;
 
     private $template;
-    private $fixture;
+    private $game;
 
     public function __construct(
-        TemplateRendererInterface $template, Fixture $fixture
+        TemplateRendererInterface $template, Game $game
     ) {
         $this->template = $template;
-        $this->fixture = $fixture;
+        $this->game = $game;
     }
 
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
-        $params = ['matches' => $this->fixture->findByLeague($this->getRouteParam($request,'leagueId'))];
+        $params = ['matches' => $this->game->findByLeague($this->getRouteParam($request,'leagueId'))];
         return new HtmlResponse($this->template->render('fixture::view', $params));
     }
 

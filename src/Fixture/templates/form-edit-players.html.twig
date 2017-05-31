@@ -1,0 +1,24 @@
+{% if team is not null %}
+    <table class="table table-fixture-players">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Goles</th>
+                <th>TA</th>
+                <th>TR</th>
+                <th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for player in repository('Player').findByTeam(team.id) %}
+            <tr>
+                <th>{{ player.name }}</th>
+                <td><input type="text" name="data_{{ match.id }}_players_{{ team.id }}_{{ player.id }}_goals" data-reuse-submitted-value="true" data-filters="toInt" /></td>
+                <td><input type="text" name="data_{{ match.id }}_players_{{ team.id }}_{{ player.id }}_yellowCard" data-reuse-submitted-value="true" data-filters="toInt" /></td>
+                <td><input type="text" name="data_{{ match.id }}_players_{{ team.id }}_{{ player.id }}_redCard" data-reuse-submitted-value="true" data-filters="toInt" /></td>
+                <td><input type="text" name="data_{{ match.id }}_players_{{ team.id }}_{{ player.id }}_score" data-reuse-submitted-value="true" data-filters="toInt" /></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

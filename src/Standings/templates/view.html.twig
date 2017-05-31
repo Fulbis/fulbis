@@ -1,0 +1,38 @@
+{% extends '@layout/admin.html.twig' %}
+
+{% block title %}Fixture{% endblock %}
+
+{% block content %}
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <h1>Standings {{ league.name }}</h1>
+
+    <table class="table">
+        <tr>
+            <th>Position</th>
+            <th>Team</th>
+            <th>Played</th>
+            <th>Won</th>
+            <th>Drawn</th>
+            <th>Lost</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>GD</th>
+            <th>Points</th>
+        </tr>
+        {% for position, standing in standings %}
+            <tr>
+                <th>{{ position }}</th>
+                <th>{{ standing.team }}</th>
+                <th>{{ standing.pld }}</th>
+                <th>{{ standing.w }}</th>
+                <th>{{ standing.d }}</th>
+                <th>{{ standing.l }}</th>
+                <th>{{ standing.gf }}</th>
+                <th>{{ standing.ga }}</th>
+                <th>{{ standing.gd }}</th>
+                <th>{{ standing.pts }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+</main>
+{% endblock %}

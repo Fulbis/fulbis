@@ -26,6 +26,8 @@
  * );
  */
 
+/** @var Zend\Expressive\Application $app */
+
 $app->route('/', App\Action\HomeAction::class, ['GET', 'POST'], 'home');
 $app->route('/login', Auth\Action\LoginAction::class, ['GET', 'POST'], 'login');
 $app->get('/logout', Auth\Action\LogoutAction::class, 'logout');
@@ -38,9 +40,13 @@ $app->get('/leagues/{leagueId}', Leagues\Action\ViewAction::class, 'leagues.view
 /*$app->get('/leagues/{leagueId}/edit', Leagues\Action\Edit::class, 'leagues.edit');
 $app->get('/leagues/{leagueId}/delete', Leagues\Action\Delete::class, 'leagues.delete');*/
 
+/* fixture */
 $app->get('/leagues/{leagueId}/fixture', Fixture\Action\ViewAction::class, 'fixture.view');
 $app->route('/leagues/{leagueId}/fixture/create/automatically', Fixture\Action\CreateAutomaticallyAction::class, ['GET', 'POST'], 'fixture.create.automatically');
 $app->route('/leagues/{leagueId}/fixture/edit/{round}', Fixture\Action\EditRoundAction::class, ['GET', 'POST'], 'fixture.edit');
+
+/* standings */
+$app->get('/leagues/{leagueId}/standings', Standings\Action\ViewAction::class, 'standings.view');
 
 /* Teams */
 $app->get('/leagues/{leagueId}/teams', Teams\Action\FetchAllAction::class, 'teams.fetchAll');

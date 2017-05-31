@@ -341,6 +341,22 @@ class Game
         return $this;
     }
 
+    public function isPlayed() {
+        return $this->score1 !== null && $this->score2 !== null;
+    }
+
+    public function isDraw() {
+        return $this->isPlayed() && $this->score1 === $this->score2;
+    }
+
+    public function hasWonTeam1() {
+        return $this->isPlayed() && $this->score1 > $this->score2;
+    }
+
+    public function hasWonTeam2() {
+        return $this->isPlayed() && $this->score2 > $this->score2;
+    }
+
     public function getArrayCopy() {
         $team1 = $this->getTeam1();
         $team2 = $this->getTeam2();

@@ -42,7 +42,8 @@
             "Players\\": "src/Players/src/",
             "Auth\\": "src/Auth/src/",
             "SignUp\\": "src/SignUp/src/",
-            "Fixture\\": "src/Fixture/src/"
+            "Fixture\\": "src/Fixture/src/",
+            "Standings\\": "src/Standings/src/"
         }
     },
     "autoload-dev": {

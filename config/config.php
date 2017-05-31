@@ -11,6 +11,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Standings\ConfigProvider::class,
     \Fixture\ConfigProvider::class,
     \SignUp\ConfigProvider::class,
     \Auth\ConfigProvider::class,

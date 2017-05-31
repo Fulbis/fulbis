@@ -4,28 +4,72 @@
 
 {% block content %}
 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-    <h1>Fixture {{ league.name }}</h1>
+    <h1>Fixture</h1>
 
     {% if matches is not empty %}
 
         {% set currentRound = -1 %}
 
+        <div id="fixture-accordion" role="tablist" aria-multiselectable="true">
+
         {% for match in matches %}
 
+
             {% if currentRound != match.round %}
-                <h3>{{ match.round }} <a href="{{ path('fixture.edit', {leagueId: routeParams.leagueId, round: match.round}) }}" class="btn btn-sm btn-primary">Edit</a></h3>
+
+                {% if not loop.first %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="card">
+
+                <div class="card-header" role="tab" id="heading{{ loop.index }}">
+                    <h5 class="mb-0 d-flex flex-row">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#fixture-accordion" href="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                            Round {{ match.round }}
+                        </a>
+
+                        <a href="{{ path('fixture.edit', {leagueId: routeParams.leagueId, round: match.round}) }}" class="btn btn-sm btn-primary ml-auto">Edit</a>
+                    </h5>
+                </div>
+
+                <div id="collapse{{ loop.index }}" class="collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
+                    <div class="card-block">
+                        <table class="table table-striped">
+
+
                 {% set currentRound = match.Round %}
             {% endif %}
 
-            {% if match.team1 is not null and match.team2 is not null %}
-                <p>{{ match.team1.name }} vs {{ match.team2.name }}</p>
-            {% elseif match.team1 is null and match.team2 is null %}
-                <p>Empty game</p>
-            {% else %}
-                <p>{{ match.team1 ? match.team1.name : match.team2.name }} doesn't play</p>
+            <tr>
+                {% if match.team1 is not null and match.team2 is not null %}
+                    <td>{{ match.team1.name }}</td>
+                    <td>{{ match.score1 }}</td>
+                    <td>{{ match.team2.name }}</td>
+                    <td>{{ match.score2 }}</td>
+                    <td><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+                {% elseif match.team1 is null and match.team2 is null %}
+                    <td>{{ match.team1 ? match.team1.name : "-" }}</td>
+                    <td></td>
+                    <td><td>{{ match.team2 ? match.team2.name : "-" }}</td>
+                    <td></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+
+            {% if loop.last %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
+
         {% endfor %}
 
+        </div>
     {% else %}
         <div class="alert alert-danger">This league doesn't have any matches yet, you can <a href="{{ path('fixture.create.automatically', {leagueId: routeParams.leagueId}) }}">create them automatically</a> or <a href="">create them manually </a></div>
     {% endif %}

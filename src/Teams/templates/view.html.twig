@@ -4,14 +4,17 @@
 
 {% block content %}
 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-    <h1>{{ team.name }}</h1>
+    <h1>{{ team.name }} <a class="btn btn-primary btn-sm" href="#">Edit</a></h1>
 
-    <p><a class="btn btn-primary" href="{{ path('players.create', {leagueId: league.id, teamId: team.id}) }}">Add players</a></p>
+    <h2>Players</h2>
+    <table class="table table-striped">
+        <tbody>
+            {% for player in players %}
+                <tr><td>{{ player.name }}</td><td><a href="#" class="btn btn-primary btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Delete</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <ul>
-        {% for player in players %}
-            <li>{{ player.name }}</li>
-        {% endfor %}
-    </ul>
+    <p><a class="btn btn-primary btn-sm" href="{{ path('players.create', {leagueId: league.id, teamId: team.id}) }}">Add players</a></p>
 </main>
 {% endblock %}

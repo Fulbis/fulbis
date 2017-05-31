@@ -6,19 +6,22 @@
 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
     <h1>Standings {{ league.name }}</h1>
 
-    <table class="table">
-        <tr>
-            <th>Position</th>
-            <th>Team</th>
-            <th>Played</th>
-            <th>Won</th>
-            <th>Drawn</th>
-            <th>Lost</th>
-            <th>GF</th>
-            <th>GA</th>
-            <th>GD</th>
-            <th>Points</th>
-        </tr>
+    <table class="table table-striped">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Position</th>
+                <th>Team</th>
+                <th>Played</th>
+                <th>Won</th>
+                <th>Drawn</th>
+                <th>Lost</th>
+                <th>GF</th>
+                <th>GA</th>
+                <th>GD</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for position, standing in standings %}
             <tr>
                 <th>{{ position }}</th>
@@ -33,6 +36,7 @@
                 <th>{{ standing.pts }}</th>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
 </main>
 {% endblock %}

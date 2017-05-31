@@ -4,16 +4,19 @@
 
 {% block content %}
     <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-        <h1>Leagues</h1>
+        <h1>My Leagues</h1>
 
         {% if leagues is empty %}
             <div class="alert alert-info">you haven't any league yet, <a href="{{ path('leagues.create') }}">create your first one.</a></div>
         {% else %}
-            <ul>
+            <table class="table table-striped">
             {% for league in leagues %}
-                <li><a href="{{ path('leagues.view', {leagueId: league.id}) }}">{{ league.name }}</a></li>
+                <tr>
+                    <td>{{ league.name }}</td>
+                    <td><a href="{{ path('leagues.view', {leagueId: league.id}) }}" class="btn btn-primary btn-sm">View</a></td>
+                </tr>
             {% endfor %}
-            </ul>
+            </table>
         {% endif %}
     </main>
 {% endblock %}

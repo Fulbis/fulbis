@@ -9,11 +9,18 @@
         {% if teams is empty %}
             <div class="alert alert-warning">There's no teams in this league, <a href="{{ path('teams.create', {leagueId: routeParams.leagueId}) }}">add them here.</a></div>
         {% else %}
-            <ul>
-            {% for team in teams %}
-                <li><a href="{{ path('teams.view', {leagueId: routeParams.leagueId, teamId: team.id}) }}">{{ team.name }}</a></li>
-            {% endfor %}
-            </ul>
+            <table class="table table-striped">
+                <tbody>
+
+                    {% for team in teams %}
+                        <tr>
+                            <td>{{ team.name }}</td>
+                            <td><a href="{{ path('teams.view', {leagueId: routeParams.leagueId, teamId: team.id}) }}" class="btn btn-primary btn-sm">Edit</a></td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
         {% endif %}
     </main>
 {% endblock %}

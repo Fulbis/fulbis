@@ -21,6 +21,8 @@ class Factory implements FactoryInterface
         $hydrator->addStrategy('team2', $container->get(TeamStrategy::class));
         $hydrator->addStrategy('score1', $container->get(ScoreStrategy::class));
         $hydrator->addStrategy('score2', $container->get(ScoreStrategy::class));
+        $hydrator->addStrategy('date', $container->get(DateStrategy::class));
+        $hydrator->addStrategy('time', $container->get(TimeStrategy::class));
 
         return $hydrator;
     }

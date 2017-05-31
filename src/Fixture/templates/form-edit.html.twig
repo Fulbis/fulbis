@@ -6,18 +6,18 @@
 
             <div class="col-6">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="form-group col-8">
                         <label>Team 1</label><br />
-                        <select name="data_{{ match.id }}_team1" data-reuse-submitted-value="true" required>
+                        <select name="data_{{ match.id }}_team1" class="form-control" data-reuse-submitted-value="true" required>
                             <option value=""></option>
                             {% for teamId, teamName in teams %}
                                 <option value="{{ teamId }}">{{ teamName }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="form-group col-4">
                         <label>Score</label><br />
-                        <input type="text" name="data_{{ match.id }}_score1" data-reuse-submitted-value="true" />
+                        <input type="text" name="data_{{ match.id }}_score1" class="form-control" data-reuse-submitted-value="true" />
                     </div>
                     <div class="col-12">
                         {% include "@fixture/form-edit-players.html.twig" with {match: match, team: match.team1} %}
@@ -26,18 +26,18 @@
             </div>
             <div class="col-6">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="form-group col-8">
                         <label>Team 2</label><br />
-                        <select name="data_{{ match.id }}_team2" data-reuse-submitted-value="true" required>
+                        <select name="data_{{ match.id }}_team2" class="form-control" data-reuse-submitted-value="true" required>
                             <option value=""></option>
                             {% for teamId, teamName in teams %}
                                 <option value="{{ teamId }}">{{ teamName }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="form-group col-4">
                         <label>Score</label><br />
-                        <input type="text" name="data_{{ match.id }}_score2" data-reuse-submitted-value="true" />
+                        <input type="text" name="data_{{ match.id }}_score2" class="form-control" data-reuse-submitted-value="true" />
                     </div>
                     <div class="col-12">
                         {% include "@fixture/form-edit-players.html.twig" with {match: match, team: match.team2} %}
@@ -46,24 +46,37 @@
             </div>
         </div>
 
-        {# <input type="text" name="data[{match.id}][place]" required /> #}
+        <div class="row">
+            <div class="form-group col-3">
+                <label>Place</label>
+                <input type="text" name="data_{{ match.id }}_place" class="form-control" data-reuse-submitted-value="true" />
+            </div>
+            <div class="form-group col-3">
+                <label>Date</label>
+                <input type="text" name="data_{{ match.id }}_date" class="form-control" data-reuse-submitted-value="true" data-filters="Null" />
+            </div>
+            <div class="form-group col-3">
+                <label>Time</label>
+                <input type="text" name="data_{{ match.id }}_time" class="form-control" data-reuse-submitted-value="true" data-filters="Null" />
+            </div>
+            <div class="form-group col-3">
+                <label>Referee</label>
+                <input type="text" name="data_{{ match.id }}_referee" class="form-control" data-reuse-submitted-value="true" />
+            </div>
+        </div>
 
-        {# time / date #}
 
         <div class="form-group">
             <label>Title</label>
-            <input type="text" name="data_{{ match.id }}_title" data-reuse-submitted-value="true" />
+            <input type="text" name="data_{{ match.id }}_title" class="form-control" data-reuse-submitted-value="true" />
         </div>
 
         <div class="form-group">
             <label>Comments</label>
-            <textarea name="data_{{ match.id }}_comments" data-reuse-submitted-value="true"></textarea>
+            <textarea name="data_{{ match.id }}_comments" class="form-control" data-reuse-submitted-value="true" rows="4"></textarea>
         </div>
 
-        <div class="form-group">
-            <label>Referee</label>
-            <input type="text" name="data_{{ match.id }}_referee" data-reuse-submitted-value="true" />
-        </div>
+        <hr />
 
     {% endfor %}
 

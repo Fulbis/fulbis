@@ -1,0 +1,20 @@
+{% extends '@layout/admin.html.twig' %}
+
+{% block title %}Leagues{% endblock %}
+
+{% block content %}
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <h1>{{ league.name }}</h1>
+
+    <div>
+        <h2>Standings</h2>
+        {% include "@standings/standings.html.twig" with {standings: standings} %}
+
+        <h3>Top scorers</h3>
+        {% include "@standings/players.html.twig" with {players: topScorers, 'statName': 'Goals'} %}
+
+        <h3>Best players</h3>
+        {% include "@standings/players.html.twig" with {players: bestPlayers, 'statName': 'Score'} %}
+    </div>
+</main>
+{% endblock %}

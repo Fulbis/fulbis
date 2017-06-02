@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Position</th>
+        <th>Player</th>
+        <th>{{ statName }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key, player in players %}
+        <tr>
+            <th>{{ key+1 }}</th>
+            <th>{{ player.playerName }}<br />{{ player.teamName }}</th>
+            <th>{{ player.total }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -40,6 +40,9 @@ $app->get('/leagues/{leagueId}', Leagues\Action\ViewAction::class, 'leagues.view
 /*$app->get('/leagues/{leagueId}/edit', Leagues\Action\Edit::class, 'leagues.edit');
 $app->get('/leagues/{leagueId}/delete', Leagues\Action\Delete::class, 'leagues.delete');*/
 
+/* dashboard */
+$app->get('/leagues/{leagueId}/dashboard', Leagues\Action\DashboardAction::class, 'leagues.dashboard');
+
 /* fixture */
 $app->get('/leagues/{leagueId}/fixture', Fixture\Action\ViewAction::class, 'fixture.view');
 $app->route('/leagues/{leagueId}/fixture/create/automatically', Fixture\Action\CreateAutomaticallyAction::class, ['GET', 'POST'], 'fixture.create.automatically');

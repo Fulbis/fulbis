@@ -28,6 +28,8 @@ class RouterFirewallAction implements ServerMiddlewareInterface
 
         $params = $this->getRouteParams($request);
 
+        $params['routeName'] = $request->getAttribute(\Zend\Expressive\Router\RouteResult::class)->getMatchedRouteName();
+
         $this->template->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'routeParams', $params);
 
         if (isset($params['leagueId'])) {

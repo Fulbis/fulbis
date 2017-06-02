@@ -1,0 +1,39 @@
+{% extends '@layout/admin.html.twig' %}
+
+{% block title %}Game{% endblock %}
+
+{% block content %}
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <h1>Game</h1>
+
+    {% if game is not empty %}
+
+        <p>Round {{ game.round }}</p>
+
+        <div>
+            <div>{{ game.team1.name }}</div>
+            <div>{{ game.score1 }}</div>
+            <div>{{ game.score2 }}</div>
+            <div>{{ game.team2.name }}</div>
+
+            {% set gameStats = repository("GameStats").findByGame(game.id) %}
+
+            <div>
+                {% include "@fixture/game-players.html.twig" with {gameStats: gameStats, teamId: game.team1.id}%}
+            </div>
+            <div>
+                {% include "@fixture/game-players.html.twig" with {gameStats: gameStats, teamId: game.team2.id}%}
+            </div>
+        </div>
+
+        <h3>{{ game.title }}</h3>
+
+        <div>
+            {{ game.comments }}
+        </div>
+
+    {% else %}
+        <div class="alert alert-danger">Game not found.</div>
+    {% endif %}
+</main>
+{% endblock %}

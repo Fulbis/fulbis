@@ -50,7 +50,7 @@
                     <td>{{ match.score1 }}</td>
                     <td>{{ match.team2.name }}</td>
                     <td>{{ match.score2 }}</td>
-                    <td><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+                    <td><a href="{{ path('fixture.game.view', {leagueId: routeParams.leagueId, gameId: match.id}) }}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
                 {% elseif match.team1 is null and match.team2 is null %}
                     <td>{{ match.team1 ? match.team1.name : "-" }}</td>
                     <td></td>

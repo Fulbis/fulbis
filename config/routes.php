@@ -45,6 +45,9 @@ $app->get('/leagues/{leagueId}/fixture', Fixture\Action\ViewAction::class, 'fixt
 $app->route('/leagues/{leagueId}/fixture/create/automatically', Fixture\Action\CreateAutomaticallyAction::class, ['GET', 'POST'], 'fixture.create.automatically');
 $app->route('/leagues/{leagueId}/fixture/edit/{round}', Fixture\Action\EditRoundAction::class, ['GET', 'POST'], 'fixture.edit');
 
+/* game */
+$app->get('/leagues/{leagueId}/game/{gameId}', Fixture\Action\GameAction::class, 'fixture.game.view');
+
 /* standings */
 $app->get('/leagues/{leagueId}/standings', Standings\Action\ViewAction::class, 'standings.view');
 
